@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário do Restaurante</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: sans-serif;
+            background: #f4f4f4;
+            padding: 2rem;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #222;
+        }
+
+        /* ---------- FORMULÁRIO ---------- */
+        form {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        form h2 {
+            grid-column: 1 / -1; /* ocupa as duas colunas */
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9rem;
+            gap: 4px;
+        }
+
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        button[type="submit"] {
+            grid-column: 1 / -1;
+            padding: 10px;
+            background: #2a9d5c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover { background: #228a4e; }
+
+        /* ---------- MENSAGEM DE FEEDBACK ---------- */
+        #mensagem {
+            text-align: center;
+            font-weight: bold;
+            color: #2a9d5c;
+            min-height: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ---------- TABELA ---------- */
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #2a9d5c;
+            color: #fff;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover td { background: #f9f9f9; }
+
+        .btn-remover {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-remover:hover { background: #c0392b; }
+    </style>
+</head>
+<body>
+
+<h1>🍽️ Inventário do Restaurante</h1>
+
+<!-- ======================================================
+     FORMULÁRIO — os dados aqui serão enviados ao servidor
+     ====================================================== -->
+<form id="formulario">
+    <h2>Adicionar item ao estoque</h2>
+
+    <label>
+        Nome do produto
+        <input type="text" id="nome" placeholder="Ex: Farinha de trigo" required>
+    </label>
+
+    <label>
+        Categoria
+        <select id="categoria">
+            <option value="Grãos e farinhas">Grãos e farinhas</option>
+            <option value="Carnes">Carnes</option>
+            <option value="Laticínios">Laticínios</option>
+            <option value="Bebidas">Bebidas</option>
+            <option value="Temperos">Temperos</option>
+            <option value="Outros">Outros</option>
+        </select>
+    </label>
+
+    <label>
+        Quantidade
+        <input type="number" id="quantidade" placeholder="Ex: 10" min="0" step="0.01" required>
+    </label>
+
+    <label>
+        Unidade
+        <select id="unidade">
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="L">L</option>
+            <option value="mL">mL</option>
+            <option value="unidade">unidade</option>
+            <option value="caixa">caixa</option>
+            <option value="pacote">pacote</option>
+        </select>
+    </label>
+
+    <label>
+        Preço unitário (R$)
+        <input type="number" id="preco_unit" placeholder="Ex: 5.90" min="0" step="0.01" required>
+    </label>
+
+    <button type="submit">Salvar no estoque</button>
+</form>
+
+<!-- Mensagem de sucesso ou erro -->
+<p id="mensagem"></p>
+
+<!-- ======================================================
+     TABELA — lista os itens salvos no banco
+     ====================================================== -->
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+            <th>Unidade</th>
+            <th>Preço unit.</th>
+            <th>Data</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody id="tabela-corpo">
+        <!-- Os itens do banco aparecerão aqui automaticamente -->
+    </tbody>
+</table>
+
+<script>
+    // ==================================================
+    // BASE_URL — endereço do servidor Node.js
+    // ==================================================
+    const BASE_URL = 'http://localhost:3000';
+
+    // --------------------------------------------------
+    // Função: buscar itens do banco e exibir na tabela
+    // --------------------------------------------------
+    async function carregarItens() {
+        // Chama o servidor na rota GET /itens
+        const resposta = await fetch(`${BASE_URL}/itens`);
+        const itens    = await resposta.json();
+
+        const corpo = document.getElementById('tabela-corpo');
+        corpo.innerHTML = ''; // Limpa a tabela antes de preencher
+
+        // Para cada item recebido, cria uma linha na tabela
+        itens.forEach(item => {
+            const linha = document.createElement('tr');
+            linha.innerHTML = `
+                <td>${item.nome}</td>
+                <td>${item.categoria}</td>
+                <td>${item.quantidade}</td>
+                <td>${item.unidade}</td>
+                <td>R$ ${parseFloat(item.preco_unit).toFixed(2)}</td>
+                <td>${new Date(item.data_reg).toLocaleDateString('pt-BR')}</td>
+                <td>
+                    <button class="btn-remover" onclick="removerItem(${item.id})">
+                        Remover
+                    </button>
+                </td>
+            `;
+            corpo.appendChild(linha);
+        });
+    }
+
+    // --------------------------------------------------
+    // Função: enviar formulário → salvar no banco
+    // --------------------------------------------------
+    document.getElementById('formulario').addEventListener('submit', async (evento) => {
+        evento.preventDefault(); // Impede o recarregamento da página
+
+        // Lê os valores dos campos
+        const dados = {
+            nome:       document.getElementById('nome').value,
+            categoria:  document.getElementById('categoria').value,
+            quantidade: document.getElementById('quantidade').value,
+            unidade:    document.getElementById('unidade').value,
+            preco_unit: document.getElementById('preco_unit').value
+        };
+
+        // Envia os dados ao servidor via POST /itens
+        const resposta = await fetch(`${BASE_URL}/itens`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(dados)  // Converte objeto em texto JSON
+        });
+
+        const resultado = await resposta.json();
+
+        // Exibe a mensagem de retorno
+        document.getElementById('mensagem').textContent = resultado.mensagem;
+
+        // Limpa o formulário e atualiza a tabela
+        evento.target.reset();
+        carregarItens();
+    });
+
+    // --------------------------------------------------
+    // Função: remover item pelo ID
+    // --------------------------------------------------
+    async function removerItem(id) {
+        if (!confirm('Remover este item?')) return;
+
+        await fetch(`${BASE_URL}/itens/${id}`, { method: 'DELETE' });
+        carregarItens();
+    }
+
+    // Carrega os itens assim que a página abre
+    carregarItens();
+</script>
+
+</body>
+</html>
