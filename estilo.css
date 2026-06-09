@@ -1,5 +1,5 @@
 body {
-    background-color: #212529;
+    background-color: #01172c;
     color: white;
 }
 
@@ -9,7 +9,7 @@ body {
     padding: 80px 0;
 }
 .titulo {
-    text-shadow: #212529 3px 3px 3px;
+    text-shadow: #212129 3px 3px 3px;
 }
 
 .card {
