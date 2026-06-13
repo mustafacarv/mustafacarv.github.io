@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandas - Sistema Restaurante</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+
+        .card {
+            border: none;
+        }
+
+        .accordion-button {
+            font-weight: 600;
+        }
+
+        /* =============================
+           ESTILOS DE IMPRESSÃO
+           Epson TM-T20 — bobina 80mm
+           Área útil: ~72mm (576 dots)
+           Resolução: 203 dpi
+           Fonte sugerida: Courier New 9pt
+        ============================== */
+
+        @page {
+            size: 80mm auto;   /* largura fixa da bobina */
+            margin: 2mm 4mm;   /* margem mínima real da TM-T20 */
+        }
+
+        @media print {
+
+             /* Força texto mais pesado em toda a comanda */
+            .card-body * {
+                font-weight: bold !important;
+                -webkit-text-stroke: 0.3px #000;
+            }
+
+            /* Exceto a linha de detalhe @ R$ X,xx que pode ficar normal */
+            .item-detalhe {
+                font-weight: normal !important;
+                -webkit-text-stroke: 0 !important;
+            }
+
+            /* --- Reset geral --- */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            body {
+                background: #fff !important;
+                margin: 0;
+                padding: 0;
+                width: 80mm;
+            }
+
+            /* --- Esconder tudo exceto o cupom --- */
+            nav,
+            .accordion,
+            .btn,
+            #cliente,
+            #dadosCupom,
+            .col-lg-8,
+            .form-label,
+            label,
+            .card-header {
+                display: none !important;
+            }
+
+            main {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .container,
+            .row,
+            .col-lg-4 {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+                width: 72mm !important;
+                margin: 0 auto !important;
+            }
+
+            .card-body {
+                padding: 0 !important;
+                font-family: "Courier New", Courier, monospace;
+                font-size: 9pt;         /* ideal para TM-T20 com 48 colunas */
+                line-height: 1.3;
+                color: #000;
+            }
+
+            /* --- Cabeçalho do cupom --- */
+            .cupom-cabecalho {
+                text-align: center;
+                margin-bottom: 3mm;
+                border-bottom: 1px dashed #000;
+                padding-bottom: 2mm;
+            }
+
+            .cupom-cabecalho .nome-empresa {
+                font-size: 11pt;
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
+
+            .cupom-cabecalho .info-comanda {
+                font-size: 8pt;
+                margin-top: 1mm;
+            }
+
+            /* --- Info do cliente --- */
+            .cupom-cliente {
+                font-size: 8pt;
+                margin-bottom: 2mm;
+                border-bottom: 1px dashed #000;
+                padding-bottom: 2mm;
+            }
+
+            /* --- Cabeçalho da tabela de itens --- */
+            .cupom-col-header {
+                display: flex;
+                justify-content: space-between;
+                font-size: 8pt;
+                font-weight: bold;
+                border-bottom: 1px solid #000;
+                padding-bottom: 1mm;
+                margin-bottom: 1mm;
+            }
+
+            /* --- Lista de itens --- */
+            .list-group-item {
+                border: none !important;
+                padding: 0.5mm 0 !important;
+                font-size: 9pt;
+                font-family: "Courier New", Courier, monospace;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            /* linha de subtotal por item (qtd × preço unitário) */
+            .list-group-item .item-detalhe {
+                display: block;
+                font-size: 7.5pt;
+                color: #000;
+                padding-left: 3mm;
+            }
+
+            /* --- Separador --- */
+            .cupom-separador {
+                border: none;
+                border-top: 1px dashed #000;
+                margin: 2mm 0;
+            }
+
+            /* --- Total --- */
+            .cupom-total {
+                font-family: "Courier New", Courier, monospace;
+                font-size: 11pt;
+                font-weight: bold;
+                text-align: right;
+                margin-top: 2mm;
+                border-top: 1px solid #000;
+                padding-top: 2mm;
+            }
+
+            /* --- Rodapé --- */
+            .cupom-rodape {
+                text-align: center;
+                font-size: 7.5pt;
+                margin-top: 3mm;
+                border-top: 1px dashed #000;
+                padding-top: 2mm;
+                line-height: 1.5;
+            }
+
+            /* --- Esconde campos auxiliares de tela --- */
+            .mb-3:has(input[readonly]),
+            .mb-3:has(#cliente),
+            .text-center.mb-3 {
+                display: none !important;
+            }
+
+            /* --- Esconde o alert colorido da tela --- */
+            .alert {
+                display: none !important;
+            }
+
+            /* --- Exibe blocos só-impressão --- */
+            .so-impressao {
+                display: block !important;
+            }
+        }
+
+        /* Na tela, blocos de impressão ficam ocultos */
+        .so-impressao {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENU -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                🍔 Restaurante do Hugo
+            </a>
+            <a href="index.html">
+                <button type="button" class="btn btn-warning">
+                    <i class="bi bi-arrow-return-left"></i>
+                </button>
+            </a>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO -->
+    <main class="container mt-4">
+
+        <div class="row">
+
+            <!-- COMANDA -->
+            <div class="col-lg-4 mb-4">
+
+                <div class="card shadow">
+
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0">🧾 Comanda</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Campos visíveis na tela -->
+                        <div class="mb-3">
+                            <label class="form-label">Número da Comanda</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="#001"
+                                readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nome do Cliente</label>
+                            <input
+                                type="text"
+                                id="cliente"
+                                class="form-control"
+                                placeholder="Digite o nome do cliente">
+                        </div>
+
+                        <!-- =============================================
+                             CUPOM TÉRMICO — aparece só na impressão
+                             Estrutura otimizada para Epson TM-T20 80mm
+                        ============================================= -->
+                        <div class="so-impressao">
+
+                            <!-- Cabeçalho -->
+                            <div class="cupom-cabecalho">
+                                <div class="nome-empresa">TESTE</div>
+                                <div class="info-comanda">CNPJ: 00.000.000/0001-00</div>
+                                <div class="info-comanda">Rua Exemplo, 123 — Rio de Janeiro/RJ</div>
+                                <div class="info-comanda">Tel: (21) 0000-0000</div>
+                                <div class="info-comanda" id="dataHoraCupom"></div>
+                                <div class="info-comanda">
+                                    <strong>COMANDA Nº: #001</strong>
+                                </div>
+                            </div>
+
+                            <!-- Cliente -->
+                            <div class="cupom-cliente">
+                                Cliente: <span id="clienteCupomImpressao">Não informado</span>
+                            </div>
+
+                            <!-- Cabeçalho colunas -->
+                            <div class="cupom-col-header">
+                                <span>ITEM</span>
+                                <span>TOTAL</span>
+                            </div>
+
+                        </div>
+                        <!-- fim .so-impressao cabeçalho -->
+
+                        <!-- Lista de itens (compartilhada entre tela e impressão) -->
+                        <ul id="listaItens" class="list-group mb-3"></ul>
+
+                        <!-- Rodapé do cupom — só na impressão -->
+                        <div class="so-impressao">
+                            <hr class="cupom-separador">
+                            <div class="cupom-total">
+                                TOTAL: R$ <span id="totalImpressao">0.00</span>
+                            </div>
+                            <div class="cupom-rodape">
+                                Obrigado pela preferência!<br>
+                                Volte sempre 😊<br>
+                                <br>
+                                Documento sem valor fiscal
+                            </div>
+                        </div>
+                        <!-- fim rodapé impressão -->
+
+                        <!-- Total visível na tela -->
+                        <div class="alert alert-success">
+                            <strong>Total:</strong>
+                            R$ <span id="total">0.00</span>
+                        </div>
+
+                        <button
+                            onclick="imprimir()"
+                            class="btn btn-primary w-100">
+                            🖨️ Imprimir Comanda
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PRODUTOS -->
+            <div class="col-lg-8">
+
+                <div class="accordion" id="accordionProdutos">
+
+                    <!-- LANCHES -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#lanches">
+                                🍔 Lanches
+                            </button>
+                        </h2>
+                        <div id="lanches" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <strong>Hambúrguer Artesanal</strong><br>
+                                        <small>R$ 25,00</small>
+                                    </div>
+                                    <input type="number" min="0" value="0"
+                                        class="form-control quantidade"
+                                        data-nome="Hamburguer Artesanal"
+                                        data-preco="25"
+                                        style="width:80px;">
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <strong>X-Bacon</strong><br>
+                                        <small>R$ 30,00</small>
+                                    </div>
+                                    <input type="number" min="0" value="0"
+                                        class="form-control quantidade"
+                                        data-nome="X-Bacon"
+                                        data-preco="30"
+                                        style="width:80px;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BEBIDAS -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#bebidas">
+                                🥤 Bebidas
+                            </button>
+                        </h2>
+                        <div id="bebidas" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <strong>Coca-Cola 350ml</strong><br>
+                                        <small>R$ 6,00</small>
+                                    </div>
+                                    <input type="number" min="0" value="0"
+                                        class="form-control quantidade"
+                                        data-nome="Coca-Cola 350ml"
+                                        data-preco="6"
+                                        style="width:80px;">
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <strong>Guarana 350ml</strong><br>
+                                        <small>R$ 5,00</small>
+                                    </div>
+                                    <input type="number" min="0" value="0"
+                                        class="form-control quantidade"
+                                        data-nome="Guarana 350ml"
+                                        data-preco="5"
+                                        style="width:80px;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SOBREMESAS -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#sobremesas">
+                                🍰 Sobremesas
+                            </button>
+                        </h2>
+                        <div id="sobremesas" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <strong>Pudim</strong><br>
+                                        <small>R$ 8,00</small>
+                                    </div>
+                                    <input type="number" min="0" value="0"
+                                        class="form-control quantidade"
+                                        data-nome="Pudim"
+                                        data-preco="8"
+                                        style="width:80px;">
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <strong>Mousse</strong><br>
+                                        <small>R$ 7,00</small>
+                                    </div>
+                                    <input type="number" min="0" value="0"
+                                        class="form-control quantidade"
+                                        data-nome="Mousse"
+                                        data-preco="7"
+                                        style="width:80px;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- fim accordion -->
+
+            </div><!-- fim col produtos -->
+
+        </div><!-- fim row -->
+
+    </main>
+
+    <script>
+
+        const quantidades    = document.querySelectorAll(".quantidade");
+        const totalSpan      = document.getElementById("total");
+        const totalImpressao = document.getElementById("totalImpressao");
+        const listaItens     = document.getElementById("listaItens");
+
+        // ── Preenche data/hora no cupom ──────────────────────────
+        function atualizarDataHora() {
+            const el = document.getElementById("dataHoraCupom");
+            if (!el) return;
+            const agora = new Date();
+            const pad   = n => String(n).padStart(2, "0");
+            el.textContent =
+                pad(agora.getDate())    + "/" +
+                pad(agora.getMonth()+1) + "/" +
+                agora.getFullYear()     + "  " +
+                pad(agora.getHours())   + ":" +
+                pad(agora.getMinutes());
+        }
+        atualizarDataHora();
+
+        // ── Atualiza a lista de itens e totais ───────────────────
+        function atualizarComanda() {
+
+            let total = 0;
+            listaItens.innerHTML = "";
+
+            quantidades.forEach(item => {
+
+                const quantidade = parseInt(item.value) || 0;
+
+                if (quantidade > 0) {
+
+                    const nome     = item.dataset.nome;
+                    const preco    = parseFloat(item.dataset.preco);
+                    const subtotal = preco * quantidade;
+                    total += subtotal;
+
+                    /*
+                     * Cada item gera dois elementos:
+                     *  • Linha principal: "Qtd x Nome ........ R$ subtotal"
+                     *  • Linha detalhe  : "  @ R$ unitário cada" (só na impressão)
+                     *
+                     * Usamos Courier New para que o espaçamento seja fixo
+                     * e o alinhamento fique correto na térmica (48 colunas).
+                     */
+                    listaItens.innerHTML += `
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>${quantidade}x ${nome}</span>
+                            <span>R$ ${subtotal.toFixed(2)}</span>
+                        </li>
+                        <li class="list-group-item so-impressao" style="padding-top:0!important;">
+                            <span class="item-detalhe">@ R$ ${preco.toFixed(2)} cada</span>
+                        </li>
+                    `;
+                }
+            });
+
+            totalSpan.textContent      = total.toFixed(2);
+            totalImpressao.textContent = total.toFixed(2);
+        }
+
+        quantidades.forEach(item => item.addEventListener("input", atualizarComanda));
+
+        // ── Sincroniza nome do cliente ────────────────────────────
+        const clienteInput = document.getElementById("cliente");
+        const clienteCupom = document.getElementById("clienteCupomImpressao");
+
+        clienteInput.addEventListener("input", () => {
+            clienteCupom.textContent =
+                clienteInput.value.trim() || "Nao informado";
+        });
+
+        // ── Impressão: atualiza hora antes de imprimir ────────────
+        function imprimir() {
+            atualizarDataHora();   // garante hora exata no momento do print
+            window.print();
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
