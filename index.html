@@ -1,34 +1,202 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Sistema de Gestão Escolar do Colégio Horizonte" />
-    <title>Sistema de Gestão Escolar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <svg class="svg-sprite" aria-hidden="true">
-      <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></symbol>
-      <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
-      <symbol id="i-class" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></symbol>
-      <symbol id="i-test" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M9 5h6M9 3v4M15 3v4m-7 6 2 2 5-5M8 18h8"/></symbol>
-      <symbol id="i-grade" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14.5M8 8h8M8 12h8M8 16h4M2 20h20"/></symbol>
-      <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></symbol>
-      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
-      <symbol id="i-school" viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v9M19 10v9M3 20h18M9 20v-6h6v6"/></symbol>
-      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
-      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
-      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
-      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
-      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
-      <symbol id="i-logout" viewBox="0 0 24 24"><path d="m10 17 5-5-5-5M15 12H3M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/></symbol>
-    </svg>
-    <script src="./app.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Sistema de Gestão Escolar — Colégio Horizonte"/>
+  <title>Sistema de Gestão Escolar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       SPRITE DE ÍCONES SVG (oculto, reutilizado em todo o HTML)
+  ══════════════════════════════════════════════════════ -->
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-home"     viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></symbol>
+    <symbol id="i-users"    viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+    <symbol id="i-class"    viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></symbol>
+    <symbol id="i-test"     viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M9 5h6M9 3v4M15 3v4m-7 6 2 2 5-5M8 18h8"/></symbol>
+    <symbol id="i-grade"    viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14.5M8 8h8M8 12h8M8 16h4M2 20h20"/></symbol>
+    <symbol id="i-check"    viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></symbol>
+    <symbol id="i-chart"    viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-school"   viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v9M19 10v9M3 20h18M9 20v-6h6v6"/></symbol>
+    <symbol id="i-search"   viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-plus"     viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+    <symbol id="i-bell"     viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="i-arrow"    viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-close"    viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-logout"   viewBox="0 0 24 24"><path d="m10 17 5-5-5-5M15 12H3M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/></symbol>
+  </svg>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 1 — LOGIN
+  ══════════════════════════════════════════════════════ -->
+  <div id="tela-login">
+
+    <!-- Coluna esquerda: apresentação da marca -->
+    <section class="login-brand">
+      <div class="brand brand-light">
+        <span class="brand-icon">
+          <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#i-school"></use></svg>
+        </span>
+        <span>Sistema de<br><b>Gestão Escolar</b></span>
+      </div>
+
+      <div>
+        <h1>Educação organizada para transformar o aprendizado.</h1>
+        <p>Uma plataforma segura para acompanhar a rotina acadêmica, os estudantes e os resultados da escola.</p>
+      </div>
+
+      <small>Ambiente acadêmico seguro</small>
+    </section>
+
+    <!-- Coluna direita: formulário de login -->
+    <main class="login-main">
+      <div class="login-card">
+
+        <!-- Logo visível apenas no mobile -->
+        <div class="mobile-brand brand">
+          <span class="brand-icon">
+            <svg class="icon" width="22" height="22" aria-hidden="true"><use href="#i-school"></use></svg>
+          </span>
+          <b>Sistema de Gestão Escolar</b>
+        </div>
+
+        <p class="eyebrow">Acesso ao sistema</p>
+        <h1>Bem-vindo de volta</h1>
+        <p>Entre com seu usuário institucional para continuar.</p>
+
+        <!-- Formulário de login -->
+        <form id="login-form">
+          <label>
+            Usuário
+            <input id="username" autocomplete="username" placeholder="E-mail institucional ou matrícula">
+          </label>
+          <label>
+            Senha
+            <input id="password" type="password" autocomplete="current-password" placeholder="Digite sua senha">
+          </label>
+          <!-- Mensagem de erro — aparece via JS -->
+          <p class="error" id="login-error" style="display:none"></p>
+          <button class="button primary login-button" type="submit">
+            Entrar no sistema
+            <svg class="icon" width="17" height="17" aria-hidden="true"><use href="#i-arrow"></use></svg>
+          </button>
+        </form>
+
+        <!-- Contas de demonstração -->
+        <div class="demo-box">
+          <p class="demo-title">Acessos para demonstração</p>
+          <button class="demo-account" data-login="diretora@horizonte.edu">
+            <span><b>Helena Santos</b><small>diretora@horizonte.edu</small></span>
+            <em>Diretora</em>
+          </button>
+          <button class="demo-account" data-login="coordenacao@horizonte.edu">
+            <span><b>Marina Costa</b><small>coordenacao@horizonte.edu</small></span>
+            <em>Coordenadora</em>
+          </button>
+          <button class="demo-account" data-login="secretaria@horizonte.edu">
+            <span><b>Lucas Rocha</b><small>secretaria@horizonte.edu</small></span>
+            <em>Secretário</em>
+          </button>
+          <button class="demo-account" data-login="professor@horizonte.edu">
+            <span><b>Paulo Mendes</b><small>professor@horizonte.edu</small></span>
+            <em>Professor</em>
+          </button>
+          <button class="demo-account" data-login="2024001">
+            <span><b>Ana Clara Souza</b><small>2024001</small></span>
+            <em>Aluna</em>
+          </button>
+          <p class="demo-password">Senha para todas as contas: <b>escola123</b></p>
+        </div>
+
+      </div>
+    </main>
+  </div><!-- fim #tela-login -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 2 — SISTEMA (após o login)
+  ══════════════════════════════════════════════════════ -->
+  <div id="tela-sistema">
+
+    <!-- Overlay mobile para fechar o menu -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <!-- ── SIDEBAR ──────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Logotipo -->
+      <div class="sidebar-brand brand">
+        <span class="brand-icon">
+          <svg class="icon" width="22" height="22" aria-hidden="true"><use href="#i-school"></use></svg>
+        </span>
+        <span>Sistema de<br><b>Gestão Escolar</b></span>
+      </div>
+
+      <!-- Navegação — preenchida via JS conforme o perfil -->
+      <nav id="sidebar-nav">
+        <p class="nav-label">Menu principal</p>
+        <!-- os botões de navegação serão inseridos aqui pelo JavaScript -->
+      </nav>
+
+      <!-- Usuário logado + botão sair -->
+      <div class="user-area">
+        <div class="user-card">
+          <span class="avatar dark" id="user-initials"></span>
+          <span>
+            <b id="user-name"></b>
+            <small id="user-subtitle"></small>
+          </span>
+        </div>
+        <button class="logout" id="btn-logout">
+          <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#i-logout"></use></svg>
+          Sair
+        </button>
+      </div>
+
+    </aside><!-- fim .sidebar -->
+
+    <!-- ── ÁREA DE CONTEÚDO ──────────────────────────────── -->
+    <div class="content-shell">
+
+      <!-- Topbar fixa -->
+      <header class="topbar">
+        <div class="topbar-title">
+          <button class="menu-button" id="btn-menu" aria-label="Abrir menu">☰</button>
+          <span>
+            <small>Colégio Horizonte</small>
+            <b id="topbar-page-name"></b>
+          </span>
+        </div>
+        <div class="topbar-actions">
+          <span class="date-chip">
+            <svg class="icon" width="15" height="15" aria-hidden="true"><use href="#i-calendar"></use></svg>
+            Terça, 18 de março
+          </span>
+          <button class="icon-button" aria-label="Notificações">
+            <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-bell"></use></svg>
+            <i></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Conteúdo da página atual — atualizado via JS -->
+      <main class="page-content" id="page-content"></main>
+
+    </div><!-- fim .content-shell -->
+
+    <!-- Modal — inserido via JS quando necessário -->
+    <div id="modal-area"></div>
+
+  </div><!-- fim #tela-sistema -->
+
+  <script src="script.js"></script>
+
+</body>
 </html>
