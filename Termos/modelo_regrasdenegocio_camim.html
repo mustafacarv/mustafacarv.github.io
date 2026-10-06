@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regras de Negócio</title>
+</head>
+<body>
+  <div class="modal fade show" id="regraLerModal" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><span class="badge bg-dark" id="lerCodigo">RN-003</span>
+          <span id="lerTitulo">Termo de Responsabilidade, Uso e Proteção de Dados (equipe)</span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="small text-muted mb-3" id="lerMeta">Sistema: Hesk · Módulo: Todo o painel · Tipo: Restrição · Criticidade: Crítica · Versão 1.1 · Vigência: 23/07/2026 → 31/12/2026 · Definida por: Diretoria de TI</div>
+        <div class="mb-3">
+          <div class="fw-bold text-success"><i class="bi bi-check-circle"></i> O que é permitido</div>
+          <div id="lerDescricao" class="border rounded p-2 mt-1"><h2>1. Do que trata este documento</h2>
+<p>Este é o <strong>Termo de Responsabilidade, Uso e Proteção de Dados</strong> do painel de
+chamados da CAMIM (Central de Serviços / “Nosso Hesk”). Ele vale para <strong>toda pessoa que
+acessa o painel pelo lado interno</strong> — técnicos, analistas, desenvolvedores, gestores,
+administradores e prestadores com acesso concedido.</p>
+<p>Ao usar o painel, você declara que leu este documento, entendeu as regras e assume as
+responsabilidades descritas aqui. O registro do seu “Li e entendi” fica gravado com o seu
+nome, o seu login, a versão do texto e a data.</p>
+<p>Este termo convive com o <strong>Termo de Uso da Central</strong> (o que o solicitante aceita) e
+não substitui as políticas gerais da CAMIM, o contrato de trabalho, o código de conduta nem
+a legislação aplicável — em especial a <strong>Lei 13.709/2018 (LGPD)</strong>.</p>
+
+<h2>2. Definições</h2>
+<table>
+  <tbody><tr><th>Termo</th><th>O que significa aqui</th></tr>
+  <tr><td>Painel</td><td>O sistema interno de chamados e tudo que ele contém.</td></tr>
+  <tr><td>Central</td><td>A parte pública, usada por quem abre chamado.</td></tr>
+  <tr><td>Titular</td><td>A pessoa a quem o dado pessoal se refere (funcionário, cliente, paciente).</td></tr>
+  <tr><td>Dado pessoal</td><td>Qualquer informação que identifique alguém: nome, e-mail, telefone, matrícula, CPF, foto, endereço IP.</td></tr>
+  <tr><td>Dado sensível</td><td>Informação sobre saúde, biometria, origem racial, religião, opinião política, vida sexual — a LGPD trata com rigor maior. <strong>Dado de saúde de beneficiário é sensível.</strong></td></tr>
+  <tr><td>Incidente</td><td>Qualquer acesso, perda, alteração ou divulgação não autorizada de dado.</td></tr>
+  <tr><td>Telemetria</td><td>Registro automático de uso do sistema (tempo, presença, cliques, acessos).</td></tr>
+</tbody></table>
+
+<h2>3. Acesso, credencial e verificação em duas etapas</h2>
+<ol>
+  <li>O acesso é pessoal e intransferível, feito pelo <strong>Login Único (idcamim)</strong>. Não existe
+      usuário compartilhado; qualquer ação registrada sob a sua credencial é atribuída a você.</li>
+  <li>É <strong>proibido</strong> emprestar, revelar ou anotar em local acessível a sua credencial, bem
+      como usar a credencial de terceiro, ainda que com autorização verbal dele.</li>
+  <li>O painel pode exigir <strong>verificação em duas etapas (MFA)</strong>. Ao marcar “confiar neste
+      aparelho”, o sistema guarda o nome do aparelho, um segredo em forma de hash, o endereço IP,
+      o navegador (user-agent) e as datas de criação, último uso e expiração. Aparelho que não é
+      mais seu deve ser removido imediatamente em <em>Configurações › Meus dispositivos</em>.</li>
+  <li>Estação de trabalho desacompanhada deve ficar bloqueada. Sessão aberta em máquina de
+      terceiro deve ser encerrada ao sair (“Sair”), não apenas fechada.</li>
+  <li>O acesso é revogado no desligamento, no afastamento e sempre que a área responsável
+      entender necessário.</li>
+</ol>
+
+<h2>4. Princípio que rege o uso: necessidade</h2>
+<p>Você acessa o painel para <strong>executar o seu trabalho</strong>. Não para satisfazer curiosidade,
+não para acompanhar a vida de colegas, não para consultar dados de conhecidos, parentes ou de
+si mesmo fora do contexto de um atendimento sob sua responsabilidade.</p>
+<p>Toda consulta deixa rastro. O painel registra <strong>quem abriu qual chamado e quando</strong>, e
+esse registro aparece na própria linha do tempo do chamado, visível a outras pessoas da equipe.</p>
+
+<h2>5. Responsabilidade sobre o que você escreve e anexa</h2>
+<ol>
+  <li>Você é responsável por <strong>todo conteúdo que digita, cola, anexa ou encaminha</strong> no
+      painel: respostas, notas internas, descrições, comentários em cards, mensagens, prints e
+      arquivos.</li>
+  <li><strong>Nunca registre senha, token, chave de acesso ou credencial de terceiro</strong> em
+      chamado, nota, card ou conversa — nem a pedido do solicitante. Credencial que apareça no
+      texto deve ser tratada como comprometida e trocada.</li>
+  <li>Aplique o <strong>mínimo necessário</strong>: anexe só o que é preciso para resolver. Print de tela
+      é conteúdo; se a imagem traz dado que não interessa ao atendimento, tarje ou recorte antes.</li>
+  <li>Nota interna <strong>não é</strong> lugar de comentário pessoal, juízo sobre a pessoa atendida ou
+      informação alheia ao serviço. Ela é invisível ao cliente, mas é visível a toda a equipe e
+      permanece no histórico — e pode ser exigida em auditoria ou processo.</li>
+  <li>O que você escreve pode ser <strong>enviado por e-mail e WhatsApp ao solicitante</strong> e
+      <strong>copiado para o card do desenvolvedor</strong>. Escreva sabendo disso.</li>
+</ol>
+
+<h2>6. Dados de beneficiários, pacientes e clientes</h2>
+<p>O painel toca dados de clientes da operadora em várias situações: nome, e-mail, telefone,
+<strong>matrícula CAMIM</strong> (número + letra do posto), conversas de WhatsApp, prints de sistemas
+assistenciais e documentos anexados. Regras específicas:</p>
+<ol>
+  <li>Dado de saúde é <strong>sensível</strong>. Não transcreva diagnóstico, procedimento, laudo ou
+      informação clínica no chamado quando o problema for técnico — descreva o problema, não o
+      paciente.</li>
+  <li>A <strong>matrícula</strong> do cliente pode ser incluída no título do chamado para identificar o
+      atendimento. Ela circula na lista, nos e-mails e no card do desenvolvedor: use-a apenas
+      quando necessária ao atendimento.</li>
+  <li>A <strong>conversa de WhatsApp</strong> vinculada ao chamado é copiada para o painel e pode ser
+      levada ao card do desenvolvedor. Trate-a como documento do atendimento.</li>
+  <li>É proibido extrair, fotografar, imprimir, copiar para planilha ou enviar para fora do
+      ambiente corporativo qualquer relação de clientes, chamados ou contatos, salvo autorização
+      formal da área responsável.</li>
+</ol>
+
+<h2>7. Inventário do sistema — o que existe e o que cada parte registra</h2>
+<p>Você aceita usar as ferramentas abaixo nas condições descritas. A lista é exaustiva na data
+desta versão; recurso novo entra por nova versão deste termo.</p>
+
+<h3>7.1 Chamados</h3>
+<table>
+  <tbody><tr><th>Recurso</th><th>O que faz e o que fica registrado</th></tr>
+  <tr><td>Lista de chamados, filtros e presets</td><td>Filtros salvos e ordenação padrão ficam gravados por usuário.</td></tr>
+  <tr><td>Ficha do chamado</td><td>Guarda descrição, respostas, notas internas, anexos, auditoria e linha do tempo.</td></tr>
+  <tr><td>Abrir chamado (painel e Central)</td><td>Registra autor, solicitante, contato, posto, setor, categoria, sistema e anexos.</td></tr>
+  <tr><td>Responder ao solicitante</td><td>Grava a resposta, quem escreveu, o status enviado, o resultado do envio e dispara e-mail/WhatsApp.</td></tr>
+  <tr><td>Nota interna</td><td>Texto restrito à equipe, com autor e data; espelhado no card do dev quando houver.</td></tr>
+  <tr><td>Cronômetro de atendimento</td><td>Mede sessões de trabalho por chamado e por pessoa (início, fim, segundos). Pode iniciar sozinho ao abrir o chamado.</td></tr>
+  <tr><td>Marcação com @</td><td>Registra quem marcou quem, se foi visto e se foi atendido.</td></tr>
+  <tr><td>Transferir, reclassificar, mudar status/categoria/solicitante/posto</td><td>Toda alteração vai para a auditoria do chamado com autor e data.</td></tr>
+  <tr><td>Reabrir chamado resolvido</td><td>Exige motivo, notifica os envolvidos e fica no histórico.</td></tr>
+  <tr><td>Tarefa relacionada</td><td>Cria chamado-filho vinculado.</td></tr>
+  <tr><td>Visualização do chamado</td><td>Registra quem abriu, quando e por quanto tempo a tela ficou aberta.</td></tr>
+  <tr><td>Primeiro atendimento (N1) e SLA</td><td>Mede o tempo até o primeiro contato e o cumprimento de prazo, por pessoa.</td></tr>
+  <tr><td>Chamados repetidos</td><td>Compara textos por IA, agrupa duplicados e registra quem decidiu unificar ou descartar.</td></tr>
+  <tr><td>Roleta russa (atribuição automática)</td><td>Guarda por que o chamado foi para o técnico, com a carga de todos os candidatos no momento.</td></tr>
+  <tr><td>Visitas e calls</td><td>Agenda, convite ao cliente por link, confirmação, retorno do técnico e cancelamento com motivo.</td></tr>
+  <tr><td>Conversa por WhatsApp</td><td>Inicia conversa com o cliente e copia as mensagens para o chamado; registra quem iniciou, telefone e fila.</td></tr>
+  <tr><td>Rascunho de chamado</td><td>Guarda o formulário não enviado por até 30 dias, vinculado ao e-mail de quem escreveu.</td></tr>
+</tbody></table>
+
+<h3>7.2 Base de conhecimento e agentes de IA</h3>
+<table>
+  <tbody><tr><th>Recurso</th><th>O que faz e o que fica registrado</th></tr>
+  <tr><td>Artigos e notas de atualização</td><td>Conteúdo, autor, versões a cada salvamento e contagem de leituras por artigo.</td></tr>
+  <tr><td>Editor-chefe (parecer de IA)</td><td>Envia o artigo a um provedor de IA e guarda o parecer, as notas e quem pediu.</td></tr>
+  <tr><td>Leitura de prints pela IA</td><td>Envia as imagens do artigo a um provedor de IA com visão.</td></tr>
+  <tr><td>Aplicar sugestão</td><td>A IA reescreve o trecho; a versão anterior é guardada e o autor da aplicação fica registrado.</td></tr>
+  <tr><td>Mesa redonda / consenso</td><td>Guarda a conversa inteira entre você e os agentes, por artigo e por pessoa.</td></tr>
+  <tr><td>Cadastro de agentes</td><td>Fornecedor, modelo, temperatura e os prompts — quem edita muda o que é enviado à IA.</td></tr>
+  <tr><td>Respostas rápidas</td><td>Textos reutilizáveis com autor.</td></tr>
+</tbody></table>
+
+<h3>7.3 Cadastros, relatórios e configurações</h3>
+<table>
+  <tbody><tr><th>Recurso</th><th>O que faz e o que fica registrado</th></tr>
+  <tr><td>Equipe (Time)</td><td>Perfil, permissões, recursos, assinatura, jornada, preferências e notificações. Alterações vão para auditoria.</td></tr>
+  <tr><td>Categorias, sistemas, devs, postos, setores, gestores</td><td>Cadastros com autor, data e exclusão lógica; categorias têm auditoria com o que mudou.</td></tr>
+  <tr><td>Blacklist de telefones e e-mails</td><td>Bloqueia abertura de chamado; guarda motivo e quem bloqueou.</td></tr>
+  <tr><td>Regras de negócio</td><td>Este documento e os demais: versão, histórico e registro de leitura por pessoa.</td></tr>
+  <tr><td>Termos e políticas</td><td>Textos aceitos pelo solicitante, com versão e prova de aceite.</td></tr>
+  <tr><td>Dashboards, visão geral, técnicos, postos</td><td>Indicadores por pessoa e por período: chamados, tempo, primeiro login, SLA.</td></tr>
+  <tr><td>Capacidade humana</td><td>Carga, concentração, trabalho fora de expediente e noturno, cobertura e retrabalho — por técnico.</td></tr>
+  <tr><td>Avaliações do cliente</td><td>Nota e comentário sobre o atendimento, com ranking por técnico.</td></tr>
+  <tr><td>Pareceres do TI</td><td>Fila de pedidos e tempo de espera.</td></tr>
+  <tr><td>Histórico de login</td><td>Login, nome, e-mail, data, IP e navegador — acessível a administradores.</td></tr>
+  <tr><td>Clientes</td><td>Relatório por solicitante e busca com autocompletar.</td></tr>
+  <tr><td>Novidades, tema, papel de parede, música</td><td>Preferências pessoais e uploads; a música pessoal pode ser compartilhada com a equipe por escolha sua.</td></tr>
+  <tr><td>Monitor Camim, ISL Online, Discord</td><td>Atalhos para sistemas de terceiros; ao clicar, você passa a se submeter às regras deles.</td></tr>
+</tbody></table>
+
+<h2>8. Telemetria e registro de uso — o que a CAMIM mede sobre o seu trabalho</h2>
+<p>Você <strong>concorda expressamente</strong> com o registro e o tratamento das informações abaixo,
+para fins de operação, segurança, auditoria, gestão do serviço e melhoria da plataforma:</p>
+<table>
+  <tbody><tr><th>O que é medido</th><th>Como</th><th>Para quê</th></tr>
+  <tr><td>Presença (online/offline)</td><td>Sinal periódico do navegador, marcando se houve interação humana nos últimos 10 minutos</td><td>Saber quem está disponível; distribuição de chamados</td></tr>
+  <tr><td>Primeiro acesso do dia</td><td>Primeiro sinal com interação, ou o login</td><td>Indicador de início de expediente</td></tr>
+  <tr><td>Histórico de login</td><td>Data, hora, IP e navegador a cada autenticação</td><td>Segurança e apuração de incidente</td></tr>
+  <tr><td>Tempo de atendimento</td><td>Cronômetro por chamado, iniciado manualmente ou ao abrir a ficha</td><td>Dimensionar esforço e capacidade</td></tr>
+  <tr><td>Tempo de tela no chamado</td><td>Sessões de visualização, com abertura, pings e saída</td><td>Entender o atendimento e evitar retrabalho</td></tr>
+  <tr><td>Quem abriu qual chamado</td><td>Registro de visualização exibido na linha do tempo</td><td>Transparência entre a equipe e rastreabilidade</td></tr>
+  <tr><td>Primeiro contato (N1) e SLA</td><td>Marcos de tempo do atendimento</td><td>Cumprimento de prazo</td></tr>
+  <tr><td>Distribuição automática</td><td>Motivo da escolha e a carga de cada candidato no instante</td><td>Explicar e auditar a atribuição</td></tr>
+  <tr><td>Ações no sistema</td><td>Auditoria de respostas, cadastros e alterações, com autor</td><td>Rastreabilidade</td></tr>
+  <tr><td>Leituras da base</td><td>Contagem de acessos por artigo</td><td>Saber o que ajuda e o que falta documentar</td></tr>
+  <tr><td>Avaliação do cliente</td><td>Nota e comentário associados ao atendimento</td><td>Qualidade do serviço</td></tr>
+  <tr><td>Dispositivos confiáveis (MFA)</td><td>Aparelho, IP, navegador e datas</td><td>Proteger a conta</td></tr>
+  <tr><td>Leitura de regras e aceites</td><td>Pessoa, versão e data</td><td>Prova de ciência</td></tr>
+</tbody></table>
+<p>Esses dados são usados <strong>de forma agregada</strong> em relatórios de desempenho e capacidade,
+e <strong>de forma individual</strong> quando necessário para auditoria, apuração de incidente,
+verificação de cumprimento de regra ou gestão direta do trabalho.</p>
+<p><strong>O painel não é ferramenta de vigilância pessoal:</strong> não captura tela, não lê teclas fora
+dos campos do sistema, não acessa a câmera e não monitora o que você faz em outros programas.</p>
+
+<h2>9. Uso de inteligência artificial</h2>
+<p>O painel envia conteúdo a provedores de IA de terceiros nas seguintes situações, e você
+concorda com isso ao usar os recursos:</p>
+<table>
+  <tbody><tr><th>Recurso</th><th>O que é enviado</th></tr>
+  <tr><td>Sugestão de categoria</td><td>Assunto, posto e o começo da descrição do chamado</td></tr>
+  <tr><td>Chamados repetidos</td><td>Assunto e trecho da descrição dos chamados comparados</td></tr>
+  <tr><td>Editor-chefe</td><td>Texto do artigo, título, tags, artigos vizinhos e o parecer anterior</td></tr>
+  <tr><td>Leitura de prints</td><td>Texto do artigo e as imagens nele contidas</td></tr>
+  <tr><td>Mesa redonda e consenso</td><td>Artigo, artigos do mesmo sistema e a conversa inteira, incluindo o que você digitou</td></tr>
+  <tr><td>Aplicar sugestão</td><td>O conteúdo integral do artigo e a correção a aplicar</td></tr>
+  <tr><td>Importar conversa do chat</td><td>A transcrição do atendimento de WhatsApp com o cliente</td></tr>
+</tbody></table>
+<ol>
+  <li><strong>Não cole em campo analisado por IA o que não pode sair do ambiente</strong> — em especial
+      credencial, dado sensível de saúde e documento de terceiro sem necessidade.</li>
+  <li>Toda saída de IA é <strong>sugestão</strong>. A decisão é da pessoa: você responde pelo que aceitar,
+      aplicar ou enviar ao cliente.</li>
+  <li>Os prompts dos agentes ficam no cadastro do sistema. Alterá-los muda o que é enviado ao
+      provedor — é ato de responsabilidade de quem administra os agentes.</li>
+</ol>
+
+<h2>10. Transferência de dados para terceiros</h2>
+<table>
+  <tbody><tr><th>Destino</th><th>O que sai daqui</th><th>Quando</th></tr>
+  <tr><td>Login Único (idcamim)</td><td>Identificação para autenticar; consulta de cadastro por e-mail</td><td>Login e busca de solicitante</td></tr>
+  <tr><td>Provedores de IA</td><td>Ver o item 9</td><td>Nos recursos de IA</td></tr>
+  <tr><td>Serviço de WhatsApp</td><td>Telefone e o texto da mensagem (resumo do chamado, código, aviso)</td><td>Notificações, verificação e conversa</td></tr>
+  <tr><td>Servidor de e-mail</td><td>E-mail do destinatário, assunto, corpo da resposta e imagens do chamado</td><td>Notificações</td></tr>
+  <tr><td>Quadro de tarefas dos devs</td><td>Título, descrição, anexos, respostas, notas e mensagens de WhatsApp do chamado</td><td>Quando o chamado vira card</td></tr>
+  <tr><td>Chat de atendimento</td><td>Telefone, nome, fila e mensagens</td><td>Conversa iniciada pelo painel</td></tr>
+  <tr><td>Agenda do Google (link)</td><td>Assunto, horário, local e o e-mail do solicitante como convidado</td><td>Ao clicar em “Minha Agenda” numa visita</td></tr>
+</tbody></table>
+<p>Nenhuma dessas transferências é opcional dentro do recurso correspondente: usar o recurso é
+concordar com a transferência descrita.</p>
+
+<h2>11. Anexos, imagens e links</h2>
+<p>O acesso a anexo é <strong>controlado</strong> e <strong>registrado</strong>. Ele abre por uma destas
+portas, e por nenhuma outra:</p>
+<ol>
+  <li><strong>Funcionário logado</strong> no painel;</li>
+  <li><strong>Solicitante identificado</strong> na Central, quando o anexo é de um chamado dele;</li>
+  <li><strong>Link assinado com validade</strong> — é o que vai nos e-mails, porque e-mail não tem
+      sessão. A assinatura serve só para aquele arquivo e expira em 30 dias.</li>
+</ol>
+<p>Todo acesso fica gravado: quem viu, por qual porta, de qual endereço e quando.</p>
+<ol>
+  <li>Ainda assim, <strong>não repasse link de anexo para fora do contexto do atendimento</strong>:
+      enquanto o link assinado é válido, ele abre o arquivo para quem o tiver.</li>
+  <li>O convite de visita enviado ao cliente continua sendo um link sem login, por natureza —
+      ele existe para o solicitante confirmar presença sem precisar de conta. Contém assunto,
+      horário e local, então também não deve ser repassado.</li>
+  <li>Durante o período de transição, links antigos (anteriores a esta regra) ainda abrem, para
+      que os e-mails já enviados não quebrem. Passada a transição, passam a exigir identificação.</li>
+</ol>
+
+<h2>12. Vazamento de dados: prevenção, dever de avisar e consequências</h2>
+<h3>12.1 O que é considerado vazamento</h3>
+<p>Qualquer exposição de dado a quem não deveria vê-lo, inclusive por descuido: enviar resposta
+ao destinatário errado, anexar arquivo de outro chamado, repassar link de anexo, mostrar a tela
+a terceiro, deixar a sessão aberta, fotografar o monitor, extrair dados para uso particular ou
+comentar caso identificável fora do trabalho.</p>
+<h3>12.2 Prevenção — obrigações práticas</h3>
+<ol>
+  <li>Conferir o destinatário antes de enviar resposta ou iniciar conversa.</li>
+  <li>Conferir o conteúdo do anexo antes de anexar, e o que a imagem mostra além do necessário.</li>
+  <li>Não usar dados reais de cliente em teste, demonstração, treinamento ou material de aula.</li>
+  <li>Não transportar dados em dispositivo pessoal, e-mail pessoal, nuvem pessoal ou aplicativo de
+      mensagem particular.</li>
+  <li>Não usar impressão quando a tela resolve; papel impresso com dado deve ser destruído.</li>
+</ol>
+<h3>12.3 Dever de comunicar</h3>
+<p><strong>Suspeitou, comunique.</strong> Ao perceber (ou desconfiar de) acesso indevido, envio errado,
+perda de aparelho, credencial exposta ou qualquer incidente, você deve comunicar
+<strong>imediatamente</strong> à área de TI/Segurança da Informação, por chamado ou pelo canal direto,
+com todos os detalhes que souber — inclusive quando o erro tiver sido seu.</p>
+<p>Comunicar rápido reduz o dano e é considerado conduta correta. <strong>Omitir ou esconder é falta
+grave</strong>, e é o que transforma um erro operacional em um problema sério para a empresa e para
+os titulares. A CAMIM tratará o incidente conforme a LGPD, incluindo comunicação ao titular e à
+Autoridade Nacional de Proteção de Dados quando cabível.</p>
+<h3>12.4 Consequências</h3>
+<p>O descumprimento deste termo pode gerar, conforme a gravidade e a apuração: orientação,
+advertência, suspensão, rescisão por justa causa, além da responsabilização civil e criminal
+prevista em lei e do dever de reparar o dano. A CAMIM pode ser responsabilizada por incidente
+causado por conduta individual, e exercerá o direito de regresso nos termos da lei.</p>
+
+<h2>13. Retenção, exclusão e histórico</h2>
+<ol>
+  <li>O painel usa <strong>exclusão lógica</strong>: “excluir” marca o registro como excluído e o esconde,
+      sem apagar a linha. Trate exclusão como ocultação, não como destruição.</li>
+  <li>Alguns registros <strong>nunca são apagados</strong> por serem prova: leituras de regra, aceites de
+      termo, versões de artigo, pareceres, visualizações, histórico de login e auditorias.</li>
+  <li>Chamados, anexos e registros de uso são mantidos enquanto necessários ao atendimento, à
+      auditoria e ao cumprimento de obrigação legal.</li>
+</ol>
+
+<h2>14. Seus direitos como titular</h2>
+<p>Você também é titular dos seus dados. Pode solicitar confirmação de tratamento, acesso,
+correção e informações sobre compartilhamento, nos termos da LGPD, abrindo chamado para o TI.
+Registros necessários a obrigação legal, auditoria e exercício regular de direito são mantidos
+mesmo após pedido de exclusão — inclusive porque protegem você em uma eventual apuração.</p>
+
+<h2>15. Uso dos dados para estudo e melhoria da plataforma</h2>
+<p>Você concorda que os registros de uso descritos no item 8 e o conteúdo dos chamados sejam
+usados <strong>internamente</strong> para estudar o serviço e melhorar o sistema: descobrir problemas
+recorrentes, medir onde o atendimento demora, treinar melhor a equipe, escrever documentação e
+ajustar os recursos de IA. Esse uso é interno à CAMIM e orientado por finalidade legítima.</p>
+
+<h2>16. Vigência, versão e aceite</h2>
+<ol>
+  <li>Este termo vale enquanto durar o seu acesso ao painel e, quanto às obrigações de sigilo,
+      <strong>também depois do fim do vínculo</strong>.</li>
+  <li>O texto é <strong>versionado</strong>: cada alteração relevante gera nova versão, e o histórico guarda
+      o que valia em cada data.</li>
+  <li>O seu <strong>“Li e entendi”</strong> é registrado por versão, com nome, login e data. Publicada uma
+      versão nova, a leitura é pedida de novo.</li>
+  <li>Passados 7 dias da vigência sem o registro de leitura, o painel passa a exigir a leitura a
+      cada acesso — não é punição, é a forma de garantir que ninguém opere sem conhecer as regras.</li>
+</ol></div>
+        </div>
+        <div class="mb-3" id="lerContraWrap">
+          <div class="fw-bold text-danger"><i class="bi bi-x-circle"></i> O que NÃO é permitido</div>
+          <div id="lerContraregra" class="border rounded p-2 mt-1"><p><strong>É proibido, e o descumprimento é apurado:</strong></p>
+<ol>
+  <li>Usar credencial de outra pessoa, emprestar a sua ou permitir que alguém opere sob o seu login.</li>
+  <li>Consultar chamado, cliente, colega ou dado que não seja necessário ao trabalho que você está executando.</li>
+  <li>Registrar senha, token ou chave de acesso em chamado, nota, card, conversa ou anexo.</li>
+  <li>Anexar ou transcrever dado sensível (em especial informação de saúde) sem necessidade para o atendimento.</li>
+  <li>Repassar link de anexo, imagem ou convite de visita para fora do contexto do atendimento — enquanto válido, o link abre o arquivo para quem o tiver.</li>
+  <li>Extrair, copiar, fotografar, imprimir ou exportar relação de clientes, chamados ou contatos sem autorização formal.</li>
+  <li>Enviar dado da CAMIM para e-mail pessoal, nuvem pessoal, aplicativo de mensagem particular ou dispositivo próprio.</li>
+  <li>Usar dado real de cliente em teste, demonstração, treinamento ou material didático.</li>
+  <li>Colar em recurso de IA conteúdo que não pode sair do ambiente (credencial, dado sensível, documento de terceiro sem necessidade).</li>
+  <li>Comentar caso identificável fora do trabalho, inclusive em rede social e grupo de mensagens.</li>
+  <li>Deixar sessão aberta em máquina desacompanhada ou compartilhada.</li>
+  <li>Alterar, apagar ou ocultar registro para encobrir erro — inclusive nota, auditoria e avaliação.</li>
+  <li><strong>Deixar de comunicar imediatamente</strong> incidente, suspeita de acesso indevido, envio errado ou perda de dispositivo.</li>
+</ol></div>
+        </div>
+        <div class="mb-3" id="lerObsWrap">
+          <div class="fw-bold"><i class="bi bi-sticky"></i> Observações</div>
+          <div id="lerObservacoes" class="border rounded p-2 mt-1"><p><strong>Como este texto foi escrito:</strong> a partir de um inventário do próprio código —
+telas, modelos de dados que guardam informação de pessoas, integrações externas e todos os
+pontos em que conteúdo é enviado a um provedor de IA. Ele descreve o que o sistema faz hoje,
+não uma intenção.</p>
+<p><strong>Revisão jurídica:</strong>&nbsp;ajustes entram como nova versão, e o
+histórico preserva o texto de cada época — quem leu a versão anterior leu aquela.</p>
+<p><strong>Relação com o Termo de Uso da Central:</strong> este documento é o lado interno (equipe);
+o solicitante aceita o Termo de Uso e Responsabilidade da Central, que descreve o mesmo sistema
+sob a ótica de quem abre chamado.</p></div>
+        </div>
+        <div id="lerRefWrap" style="display: none;">
+          <div class="fw-bold small"><i class="bi bi-link-45deg"></i> Referências</div>
+          <div id="lerReferencias" class="small text-muted" style="white-space:pre-wrap"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a id="lerHistorico" href="/regras-negocio/3/historico/" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-clock-history"></i> Histórico de versões</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

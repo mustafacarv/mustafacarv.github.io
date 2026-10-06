@@ -89,6 +89,15 @@ function pageHeader(eyebrow, title, description, action = "") {
   </div>`;
 }
 
+function alterardata() {
+  const dataAtual = document.getElementById("dataAtual");
+  const hoje = new Date();
+  const opcoes = { day: 'numeric', month: 'long' };
+  const dataFormatada = hoje.toLocaleDateString('pt-BR', opcoes);
+  dataAtual.textContent = dataFormatada;
+}
+alterardata();
+
 function accessNotice() {
   if (["director","coordinator"].includes(state.role)) return "";
   const messages = {
@@ -576,6 +585,118 @@ document.getElementById("tela-sistema").addEventListener("change", function(e) {
   if (e.target.id === "class-select") {
     state.selectedClass = e.target.value;
     renderPage();
+  }
+});
+
+// Retorna a chave única baseada no usuário logado atualmente
+function getUsuarioChaveTermos() {
+  const usernameInput = document.getElementById('username');
+  // Pega o valor do input de login ou tenta resgatar do escopo da sessão atual
+  const usuarioAtual = usernameInput ? usernameInput.value.trim() : localStorage.getItem('escola_usuario_ativo');
+  return usuarioAtual ? `escola_termos_aceitos_v1_${usuarioAtual}` : null;
+}
+
+// Função para checar se o usuário atual já aceitou os termos
+function verificarTermosPendentes() {
+  const chaveUsuario = getUsuarioChaveTermos();
+  if (!chaveUsuario) return;
+
+  const termosAceitos = localStorage.getItem(chaveUsuario);
+  
+  if (!termosAceitos) {
+    // Exibe o backdrop e o primeiro modal de cookies
+    document.getElementById('modal-termos-backdrop').style.display = 'flex';
+    document.getElementById('modal-cookies').style.display = 'block';
+    document.getElementById('modal-uso').style.display = 'none';
+    // Limpa a checkbox de uso ao reabrir
+    const check = document.getElementById('check-concordo-termos');
+    if(check) check.checked = false;
+    const btn = document.getElementById('btn-concluir-termos');
+    if(btn) btn.setAttribute('disabled', 'true');
+  } else {
+    document.getElementById('modal-termos-backdrop').style.display = 'none';
+  }
+}
+
+// Evento do botão de aceitar cookies -> fecha cookies e abre o Termo de Uso
+document.getElementById('btn-aceitar-cookies').addEventListener('click', () => {
+  document.getElementById('modal-cookies').style.display = 'none';
+  document.getElementById('modal-uso').style.display = 'block';
+});
+
+// Habilitar/Desabilitar o botão de conclusão com base na checkbox
+const checkboxTermos = document.getElementById('check-concordo-termos');
+const btnConcluirTermos = document.getElementById('btn-concluir-termos');
+
+if(checkboxTermos && btnConcluirTermos) {
+  checkboxTermos.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      btnConcluirTermos.removeAttribute('disabled');
+    } else {
+      btnConcluirTermos.setAttribute('disabled', 'true');
+    }
+  });
+
+  // Ação de conclusão final -> Salva no navegador por usuário e libera o sistema
+  btnConcluirTermos.addEventListener('click', () => {
+    const chaveUsuario = getUsuarioChaveTermos();
+    if (chaveUsuario) {
+      localStorage.setItem(chaveUsuario, 'true');
+    }
+    document.getElementById('modal-termos-backdrop').style.display = 'none';
+  });
+}
+
+// FUNÇÃO DE TESTE: Adiciona um botão na barra lateral para resetar o aceite do usuário atual
+function injetarBotaoResetTestes() {
+  const userArea = document.querySelector('.user-area');
+  if (userArea && !document.getElementById('btn-reset-termos-teste')) {
+    const btnReset = document.createElement('button');
+    btnReset.id = 'btn-reset-termos-teste';
+    btnReset.className = 'logout'; // Reaproveita o estilo discreto do botão sair
+    btnReset.style.marginTop = '8px';
+    btnReset.style.background = 'rgba(239, 68, 68, 0.1)';
+    btnReset.style.color = '#ef4444';
+    btnReset.innerHTML = '🔄 Resetar Termos (Teste)';
+    
+    btnReset.addEventListener('click', () => {
+      const chaveUsuario = getUsuarioChaveTermos();
+      if (chaveUsuario) {
+        localStorage.removeItem(chaveUsuario);
+        alert(`Status de termos resetado para: ${document.getElementById('username')?.value || 'usuário atual'}. Faça login novamente ou recarregue para testar!`);
+        location.reload();
+      } else {
+        alert('Nenhum usuário ativo identificado.');
+      }
+    });
+
+    userArea.appendChild(btnReset);
+  }
+}
+
+// Certifique-se de chamar 'verificarTermosPendentes()' e 'injetarBotaoResetTestes()' 
+// imediatamente após o evento de login bem-sucedido disparar no seu sistema.
+
+// Exemplo dentro da sua função de login bem-sucedido no script.js:
+function realizarLogin(usuario) {
+  // ... seu código atual que valida o login e exibe a #tela-sistema ...
+
+  // Salva o usuário ativo na sessão para o controle dos termos
+  localStorage.setItem('escola_usuario_ativo', usuario);
+
+  // 1. CHAMA A VERIFICAÇÃO DOS TERMOS LOGO APÓS ENTRAR
+  verificarTermosPendentes();
+
+  // 2. INJETA O BOTÃO DE TESTE NA BARRA LATERAL
+  injetarBotaoResetTestes();
+}
+
+// No evento de carregamento inicial do script (ex: DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', () => {
+  // Se o seu sistema já inicializa com o usuário logado, adicione:
+  const usuarioAtivo = localStorage.getItem('escola_usuario_ativo');
+  if (usuarioAtivo) {
+    injetarBotaoResetTestes();
   }
 });
 

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acompanhamento de Projeto - Equipe e Linha do Tempo</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    header {background-color: #10231E; color:white}
+    body {background-color: #e3fae3;}
+    main{border: solid 1px #10231E;}
+    /* Estilos personalizados para a linha do tempo */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+      list-style: none;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #dee2e6;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .timeline-badge {
+      position: absolute;
+      left: -2rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #10231E;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #dee2e6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="text-center py-5 mb-5 shadow-sm">
+    <div class="container">
+      <h1 class="display-5 fw-bold">Gestão e Histórico do Projeto</h1>
+      <p class="lead mb-0">Acompanhamento de equipe e linha do tempo das atividades desenvolvidas</p>
+    </div>
+    <br>
+    <button type="button" class="btn btn-success" id="btnRetornar" onclick="retornar()">
+      <i class="bi bi-box-arrow-left me-2"></i>Retornar
+    </button>
+  </header>
+
+  <main class="container bg-white p-4 rounded-5">
+
+    <!-- Seção de Alunos e Cargos -->
+    <section class="mb-5">
+      <div class="row mb-4">
+        <div class="col-12">
+          <h2 class="h3 border-bottom pb-2"><i class="bi bi-people-fill text-success"></i> Alunos e Funções Principais</h2>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Aluno 1 -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center p-4">
+              <div class="rounded-circle d-inline-flex align-items-center mb-3" style="width: 70px; height: 70px; overflow: hidden;">
+                <img src="https://avatars.githubusercontent.com/u/334663395?v=4" alt="Larissa" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <h3 class="h5 card-title fw-bold">Larissa</h3>
+              <p class="badge bg-primary mb-3">Desenvolvedora Full-Stack</p>
+              <p class="card-text text-muted small">Responsável pela arquitetura, integrações e rotas de sistema.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aluno 2 -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center p-4">
+              <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px; font-size: 1.5rem;">
+                L
+              </div>
+              <h3 class="h5 card-title fw-bold">Letícia</h3>
+              <p class="badge bg-success mb-3">UI/UX Designer</p>
+              <p class="card-text text-muted small">Responsável pelo design de interfaces e experiência do usuário.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aluno 3 -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body text-center p-4">
+              <div class="rounded-circle d-inline-flex align-items-center mb-3" style="width: 70px; height: 70px; overflow: hidden;">
+                <img src="https://avatars.githubusercontent.com/u/223142214?v=4" alt="Mustafa" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <h3 class="h5 card-title fw-bold">Mustafá</h3>
+              <p class="badge bg-warning text-black mb-3">Analista de QA</p>
+              <p class="card-text text-muted small">Responsável pela validação de requisitos e testes de usabilidade.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Linha do Tempo -->
+    <section class="mb-5">
+      <div class="row mb-4">
+        <div class="col-12">
+          <h2 class="h3 border-bottom pb-2"><i class="bi bi-clock-history text-success"></i> Linha do Tempo de Atividades</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Os itens serão injetados automaticamente aqui via JavaScript -->
+            <ul class="timeline" id="timeline-list"></ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+      <p class="mb-0 small">Projetos Acadêmicos desenvolvido por Larissa Santos, Letícia Almeida e Thiago Mustafá</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const eventosTimeline = [
+    {
+      data: "06/10/2026",
+      titulo: "Projeto Enviado",
+      descricao: "O projeto foi enviado ao professor para avaliar o andamento do projeto.",
+    },
+    {
+      data: "27/09/2026",
+      titulo: "Site hospedado",
+      descricao: "O site de referência foi hospedado pelos alunos após a reunião de alinhamento e testes finais.",
+    },
+    {
+        data: "27/09/2026",
+        titulo: "Configuração Inicial do Repositório",
+        descricao: "Criação da estrutura base do projeto e configuração inicial do ambiente de desenvolvimento.",
+    },
+    {
+      data: "27/09/2026",
+      titulo: "Desenvolvimento do Protótipo no Figma",
+      descricao: "Criação do protótipo no Figma, que foi adotado como a base oficial para guiar o desenvolvimento do projeto.",
+    }
+    // Para adicionar novos eventos no futuro, basta copiar o bloco acima e alterar os dados!
+  ];
+
+  // 2. Função que gera o HTML automaticamente
+  function carregarTimeline() {
+    const timelineContainer = document.getElementById("timeline-list");
+    timelineContainer.innerHTML = ""; // Limpa antes de preencher
+
+    eventosTimeline.forEach(evento => {
+      const itemHTML = `
+        <li class="timeline-item">
+          <div class="timeline-badge"></div>
+          <div class="card shadow-sm border-0">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class="h5 card-title text-success mb-0">${evento.titulo}</h3>
+                <span class="badge bg-light text-dark border"><i class="bi bi-calendar-event"></i> ${evento.data}</span>
+              </div>
+              <p class="card-text text-secondary">${evento.descricao}</p>
+            </div>
+          </div>
+        </li>
+      `;
+      timelineContainer.innerHTML += itemHTML;
+    });
+  }
+
+  // Executa a função ao carregar a página
+  document.addEventListener("DOMContentLoaded", carregarTimeline);
+
+  function retornar() {
+    const btnRetornar = document.getElementById("btnRetornar");
+
+    window.location.href = "index.html";
+  }
+  </script>
+</body>
+</html>

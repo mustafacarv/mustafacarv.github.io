@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Sistema de Gestão Escolar — Colégio Horizonte"/>
+  <meta name="description" content="Sistema de Gestão Escolar"/>
   <title>Sistema de Gestão Escolar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -51,8 +51,9 @@
         <h1>Educação organizada para transformar o aprendizado.</h1>
         <p>Uma plataforma segura para acompanhar a rotina acadêmica, os estudantes e os resultados da escola.</p>
       </div>
-
-      <small>Ambiente acadêmico seguro</small>
+      <a href="SobreNos.html">
+        <button id="btnSobreNos">Conheça o Nosso Grupo</button>
+      </a>
     </section>
 
     <!-- Coluna direita: formulário de login -->
@@ -170,14 +171,14 @@
         <div class="topbar-title">
           <button class="menu-button" id="btn-menu" aria-label="Abrir menu">☰</button>
           <span>
-            <small>Colégio Horizonte</small>
+            <!-- <small>Colégio Horizonte</small> -->
             <b id="topbar-page-name"></b>
           </span>
         </div>
         <div class="topbar-actions">
           <span class="date-chip">
             <svg class="icon" width="15" height="15" aria-hidden="true"><use href="#i-calendar"></use></svg>
-            Terça, 18 de março
+            <span id="dataAtual">01 de janeiro</span>
           </span>
           <button class="icon-button" aria-label="Notificações">
             <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-bell"></use></svg>
@@ -194,8 +195,79 @@
     <!-- Modal — inserido via JS quando necessário -->
     <div id="modal-area"></div>
 
-  </div><!-- fim #tela-sistema -->
+    <!-- ══════════════════════════════════════════════════════
+       MODAIS DE TERMOS E COOKIES (Aparência Sequencial Pós-Login)
+  ══════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modal-termos-backdrop" style="display: none;">
+    
+    <!-- MODAL 1: AVISO DE COOKIES -->
+    <div class="modal-box" id="modal-cookies" style="display: none;">
+      <div class="modal-header">
+        <h2>Aviso de cookies</h2>
+        <span class="meta-version">Versão <strong>1.0</strong> (03/10/2026)</span>
+      </div>
+      <div class="modal-body">
+        <div class="card-resumo">
+          <h3>💡 Em palavras simples</h3>
+          <p>Usamos cookies para manter você conectado, lembrar suas preferências e registrar que você viu este aviso. Não usamos cookie de publicidade nem de rastreio de terceiros.</p>
+        </div>
+        <h4>O que são cookies</h4>
+        <p>Cookies são pequenos arquivos que o site guarda no seu navegador para lembrar informações entre uma página e outra.</p>
+        <h4>Como controlar</h4>
+        <p>Você pode apagar ou bloquear cookies nas configurações do seu navegador. Bloquear os cookies necessários pode impedir o bom funcionamento do sistema.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="button primary" id="btn-aceitar-cookies">Aceitar todos os cookies</button>
+      </div>
+    </div>
 
+    <!-- MODAL 2: TERMO DE USO E RESPONSABILIDADE -->
+    <div class="modal-box" id="modal-uso" style="display: none;">
+      <div class="modal-header">
+        <h2>Termo de Uso e Responsabilidade</h2>
+        <span class="meta-version">Versão <strong>1.0</strong> (03/10/2026)</span>
+      </div>
+      <div class="modal-body scrollable">
+        <div class="card-resumo">
+          <h3>💡 Em palavras simples</h3>
+          <p>
+            Você é responsável pelo que escreve aqui. Não digite senha, cartão, nem dado pessoal de terceiro que o sistema não exija.<br>
+            A equipe de TI lê o que você escreve no chamado — é assim que o problema é resolvido.<br>
+            Guardamos registro de uso da plataforma. Você pode pedir acesso, correção ou exclusão dos seus dados.
+          </p>
+        </div>
+        
+        <h4>1. O que é este sistema</h4>
+        <p>A <strong>Central de Serviços</strong> é o sistema interno usado para registrar, acompanhar e resolver pedidos de suporte técnico. Ao usá-lo, você concorda com este termo.</p>
+
+        <h4>2. Quem pode usar</h4>
+        <p>O acesso é destinado a funcionários, prestadores e parceiros da escola, identificados por usuário próprio. Você é responsável por manter sua credencial em sigilo.</p>
+
+        <h4>3. A sua responsabilidade sobre o que você envia</h4>
+        <p>Tudo que você digita no sistema é de sua responsabilidade. Ao enviar, você declara que:</p>
+        <ul>
+          <li>tem o direito de compartilhar aquele conteúdo com a equipe;</li>
+          <li>não está enviando senha, token, chave de acesso ou número de cartão — <strong>a plataforma nunca pede dados confidenciais</strong>;</li>
+          <li>não está enviando dado pessoal de terceiro que o sistema não exija;</li>
+          <li>entende que o conteúdo é lido pela equipe responsável.</li>
+        </ul>
+
+        <h4>4. Melhoria do produto e Segurança (LGPD)</h4>
+        <p>Os registros podem ser usados internamente para estudo e melhoria da plataforma. Em caso de incidentes, seguiremos rigorosamente o previsto na LGPD. Seus direitos de acesso, retificação ou exclusão podem ser solicitados à direção escolar.</p>
+      </div>
+      
+      <div class="modal-footer flex-column">
+        <label class="checkbox-label">
+          <input type="checkbox" id="check-concordo-termos">
+          <span>Declaro que li e concordo com os Termos de Uso e Responsabilidade.</span>
+        </label>
+        <button class="button primary" id="btn-concluir-termos" disabled>Continuar para o sistema</button>
+      </div>
+    </div>
+
+  </div>
+
+  </div><!-- fim #tela-sistema -->
   <script src="script.js"></script>
 
 </body>
